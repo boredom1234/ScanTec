@@ -1,0 +1,46 @@
+# Ignore the virtual environment folder
+venv/
+env/
+
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore environment-specific files
+*.env
+.env.local
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Ignore compiled libraries
+*.so
+*.dylib
+*.dll
+
+# Ignore testing output
+coverage/
+*.cover
+*.py[cod]
+nosetests.xml
+*.out
+
+# Ignore package directories
+lib/
+lib64/
+
+# Ignore build artifacts
+build/
+dist/
+*.egg-info/
