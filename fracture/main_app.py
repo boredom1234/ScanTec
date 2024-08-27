@@ -8,6 +8,9 @@ from PIL import Image
 from predictions import predict
 import io
 
+# Title of the page
+st.set_page_config(page_title="Fracture Detection", page_icon=":hospital:")
+
 # Fixed dimensions for images
 FIXED_WIDTH = 400
 
@@ -99,7 +102,7 @@ def main():
 
                     # Grad-CAM layer selection (inside expander for optional controls)
                     with st.expander("Advanced Settings"):
-                        gradcam_layer_name = st.text_input("Enter Grad-CAM layer", "conv5_block3_add")
+                        gradcam_layer_name = st.text_input("Enter Grad-CAM layer", "conv5_block3_out")
                         alpha = st.slider("Overlay transparency (alpha)", 0.0, 1.0, 0.4, step=0.05)
                         threshold = st.slider("ROI Threshold", 0.0, 1.0, 0.6, step=0.05)
                     
@@ -111,11 +114,13 @@ def main():
                     # Display Grad-CAM results
                     img_array_disp = np.array(img.convert('RGB'))
                     superimposed_img = overlay_gradcam_on_image(img_array_disp.copy(), heatmap, alpha)
-                    st.image(superimposed_img, caption="Grad-CAM Heatmap", width=FIXED_WIDTH)
-
-                    # Draw ROI
                     roi_img = draw_roi(superimposed_img.copy(), heatmap, threshold)
-                    st.image(roi_img, caption="Region of Interest (ROI)", width=FIXED_WIDTH)
+
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.image(superimposed_img, caption="Grad-CAM Heatmap", width=350)
+                    with col2:
+                        st.image(roi_img, caption="Region of Interest (ROI)", width=350)
 
                     # Download ROI image
                     roi_img_pil = Image.fromarray(roi_img)
