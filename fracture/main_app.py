@@ -70,8 +70,18 @@ def save_result(image):
 def main():
     st.title("Fracture Detection with Grad-CAM (ROI Detection)")
 
-    # Compact layout: Upload and display image
-    st.subheader("Step 1: Upload X-ray Image")
+    st.write(f'''
+    <a target="_self" href="https://www.google.com">
+        <button>
+            Go to Main Dashboard
+        </button>
+    </a>
+    ''',
+    unsafe_allow_html=True
+)
+    st.markdown("_Welcome to ScanTec's Fracture Detection Module. Please upload an X-ray image to detect fractures and visualize the region of interest (ROI) using Grad-CAM._")
+    st.info("Simply upload a X-RAY photo report to receive a clear interpretation.")
+    st.subheader("Please Upload X-ray Image")
     uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])
     if uploaded_file:
         img = Image.open(uploaded_file)
@@ -80,7 +90,7 @@ def main():
 
         # Step 2: Fracture Detection and Prediction
         if st.button("Analyze Fracture"):
-            st.subheader("Step 2: Fracture Detection")
+            st.subheader("Fracture Detection")
             bone_type_result = predict(uploaded_file)  # Predict body part (Elbow, Hand, Shoulder)
             result = predict(uploaded_file, bone_type_result)  # Predict fracture or not
 
@@ -88,7 +98,7 @@ def main():
                 st.error(f"Fracture Detected in {bone_type_result}")
                 
                 # Grad-CAM section (only shown if fracture is detected)
-                st.subheader("Step 3: Grad-CAM Visualization")
+                st.subheader("Grad-CAM Visualization")
                 model_map = {
                     "Elbow": "ResNet50_Elbow_frac",
                     "Hand": "ResNet50_Hand_frac",
